@@ -4514,14 +4514,20 @@ static void display_state_pre_trigger(display_state_t prev_state,
 		 *       after the resume and lipstick ipc have been done. */
 		switch( display_state ) {
 		case MCE_DISPLAY_DIM:
+			cached_brightness = dim_brightness;
+			target_brightness = dim_brightness;
 			write_brightness_value(dim_brightness);
 			break;
 		case MCE_DISPLAY_ON:
+			cached_brightness = set_brightness;
+			target_brightness = set_brightness;
 			write_brightness_value(set_brightness);
 			break;
 		default:
 		case MCE_DISPLAY_LPM_ON:
 		case MCE_DISPLAY_LPM_OFF:
+			cached_brightness = 1;
+			target_brightness = 1;
 			write_brightness_value(1);
 			break;
 		case MCE_DISPLAY_OFF:
