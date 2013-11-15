@@ -1645,7 +1645,7 @@ static void display_brightness_trigger(gconstpointer data)
 	/* Adjust the value, since it's a percentage value, and filter out
 	 * the high brightness setting
 	 */
-	new_brightness = (maximum_display_brightness * new_brightness) / 100;
+	new_brightness = (maximum_display_brightness * new_brightness) / 100 ?: 1;
 
 	/* If we're just rehashing the same brightness value, don't bother */
 	if ((new_brightness == cached_brightness) &&
@@ -5748,10 +5748,10 @@ const gchar *g_module_check_init(GModule *module)
 
 	/* Simulate display_brightness_pipe behavior and calulate the
 	 * display brightness we ought to have (when display is not off)
-	 * 1) translate brightness setting to percentage
+	 * 1) translate brightness setting to percentage (1% minimum)
 	 * 2) translate percentage to hw scale */
 
-	set_brightness = real_disp_brightness * 100 / 5;
+	set_brightness = real_disp_brightness * 100 / 4 ?: 1;
 	set_brightness = set_brightness * maximum_display_brightness / 100;
 	mce_log(LL_INFO, "set_brightness = %d", set_brightness);
 

@@ -545,7 +545,8 @@ static gpointer display_brightness_filter(gpointer data)
 	if( setting < 1 ) setting = 1; else
 	if( setting > 5 ) setting = 5;
 
-	int brightness = setting * 20;
+	/* Convert to percentage (1% minimum) */
+	int brightness = (setting - 1) * 25 ?: 1;
 
 	if( !use_als_flag )
 		goto EXIT;

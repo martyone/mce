@@ -88,8 +88,8 @@ static gpointer display_brightness_filter(gpointer data)
 	else if (raw > DISPLAY_BRIGHTNESS_MAXIMUM)
 		raw = DISPLAY_BRIGHTNESS_MAXIMUM;
 
-	/* Convert to percentage */
-	raw *= 20;
+	/* Convert to percentage (1% minimum) */
+	raw = (raw - 1) * 25 ?: 1;
 
 EXIT:
 	retval = GINT_TO_POINTER(raw);
